@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Dashboard Layout</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
+
+    <div class="dashboard-wrapper">
+
+        <aside class="sidebar">
+            <div class="logo">
+                LARANA, INC.
+            </div>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="#" class="active"><i class="icon">🏠</i> Dashboard</a></li>
+                    <li><a href="#"><i class="icon">💡</i> Insight</a></li>
+                    <li><a href="#"><i class="icon">📊</i> Transaction</a></li>
+                    <li><a href="#"><i class="icon">💳</i> Account</a></li>
+                    <li><a href="#"><i class="icon">⚙️</i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="upgrade-priority">
+                <i class="icon">⭐</i>
+                <h4>UPGRADE PRIORITY</h4>
+                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor</p>
+                <div class="dots">...</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h2>DASHBOARD</h2>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search Here">
+                        <i class="icon">🔍</i>
+                    </div>
+                    <i class="icon">🔔</i>
+                    <i class="icon">👤</i>
+                    <button class="menu-toggle" aria-label="Toggle menu">
+                        <i class="icon">☰</i>
+                    </button>
+                </div>
+            </header>
+
+            <section class="content-grid">
+                <div class="card debit-card">
+                    <div class="containment-holder">
+                        <div class="containment">
+                            <h1>Student Profile</h1>
+                    
+                            <div id="loading-message">Loading profile...</div>
+                            <div id="error-message" style="display: none;"></div>
+                    
+                            <div id="profile-details" style="display: none;">
+                                <div class="profile-item"><strong>Student ID:</strong> <span id="student-id"></span></div>
+                                <div class="profile-item"><strong>Name:</strong> <span id="first-name"></span> <span id="last-name"></span></div>
+                                <div class="profile-item"><strong>Matriculation Number:</strong> <span id="matriculation-number"></span></div>
+                                <div class="profile-item"><strong>Level:</strong> <span id="level"></span></div>
+                                <div class="profile-item"><strong>Program:</strong> <span id="intended-program"></span></div>
+                                <div class="profile-item"><strong>Department:</strong> <span id="department-name"></span></div>
+                                <div class="profile-item"><strong>Email:</strong> <span id="email"></span></div>
+                                <div class="profile-item"><strong>Contact Number:</strong> <span id="contact-number"></span></div>
+                                <div class="profile-item"><strong>Date of Birth:</strong> <span id="date-of-birth"></span></div>
+                                <div class="profile-item"><strong>Gender:</strong> <span id="gender"></span></div> </div>
+                        </div>
+                    </div>
+                
+                </div>
+
+                <div class="card income-spending">
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <div class="calendar-header">
+                            <button id="prev-month" class="nav-button">❮</button>
+                            <h2>Month Year</h2> <button id="next-month" class="nav-button">❯</button>
+                        </div>
+                        </div>
+                        <table class="calendar-table">
+                            <thead>
+                                <tr>
+                                    <th>Sun</th>
+                                    <th>Mon</th>
+                                    <th>Tue</th>
+                                    <th>Wed</th>
+                                    <th>Thu</th>
+                                    <th>Fri</th>
+                                    <th>Sat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="inactive">30</td>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>5</td>
+                                    <td>6</td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>8</td>
+                                    <td>9</td>
+                                    <td>10</td>
+                                    <td>11</td>
+                                    <td>12</td>
+                                    <td>13</td>
+                                </tr>
+                                <tr>
+                                    <td>14</td>
+                                    <td>15</td>
+                                    <td>16</td>
+                                    <td>17</td>
+                                    <td>18</td>
+                                    <td>19</td>
+                                    <td>20</td>
+                                </tr>
+                                <tr>
+                                    <td>21</td>
+                                    <td>22</td>
+                                    <td>23</td>
+                                    <td>24</td>
+                                    <td class="current-day">25</td>
+                                    <td>26</td>
+                                    <td>27</td>
+                                </tr>
+                                <tr>
+                                    <td>28</td>
+                                    <td>29</td>
+                                    <td>30</td>
+                                    <td class="inactive">1</td>
+                                    <td class="inactive">2</td>
+                                    <td class="inactive">3</td>
+                                    <td class="inactive">4</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+
+                
+
+                <div class="card transactions">
+                     <div class="card-header">
+                         <h3>TRANSACTION</h3>
+                         <div class="dots">...</div>
+                     </div>
+                    <ul>
+                        <li>
+                            <div class="transaction-item">
+                                <i class="icon category-icon">🏥</i>
+                                <div class="transaction-details">
+                                    <p class="name">HOSPITAL</p>
+                                    <p class="date-time">Yesterday, 2:00 PM</p>
+                                </div>
+                                <div class="transaction-info">
+                                    <p class="type">PAYMENT</p>
+                                     <p class="status success">Success</p>
+                                </div>
+                                <p class="amount">- $1,900</p>
+                            </div>
+                        </li>
+                         <li>
+                            <div class="transaction-item">
+                                <i class="icon category-icon">👤</i>
+                                <div class="transaction-details">
+                                    <p class="name">ALFREDO TORRES</p>
+                                    <p class="date-time">Yesterday, 10:00 AM</p>
+                                </div>
+                                <div class="transaction-info">
+                                    <p class="type">PAYMENT</p>
+                                     <p class="status success">Success</p>
+                                </div>
+                                <p class="amount">+ $2,000</p>
+                            </div>
+                        </li>
+                         <li>
+                            <div class="transaction-item">
+                                <i class="icon category-icon">👤</i>
+                                <div class="transaction-details">
+                                    <p class="name">CLAUDIA ALVES</p>
+                                    <p class="date-time">Yesterday, 4:00 AM</p>
+                                </div>
+                                <div class="transaction-info">
+                                    <p class="type">PAYMENT</p>
+                                     <p class="status success">Success</p>
+                                </div>
+                                <p class="amount">+ $2,500</p>
+                            </div>
+                        </li>
+                         <li>
+                            <div class="transaction-item">
+                                <i class="icon category-icon">⚡</i>
+                                <div class="transaction-details">
+                                    <p class="name">INSTALLMENT</p>
+                                    <p class="date-time">1 Month Ago, 4:00 PM</p>
+                                </div>
+                                <div class="transaction-info">
+                                    <p class="type">SUBSCRIPTION</p>
+                                     <p class="status success">Success</p>
+                                </div>
+                                <p class="amount">- $200</p>
+                            </div>
+                        </li>
+                        </ul>
+                </div>
+
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3>CARD INFO</h3>
+                        <div class="dots">...</div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Card Number</span>
+                        <span class="info-value">123-456-7890</span>
+                    </div>
+                     <div class="info-item">
+                        <span class="info-label">Name</span>
+                        <span class="info-value">Olivia Wilson</span>
+                    </div>
+                     <div class="info-item">
+                        <span class="info-label">Status</span>
+                        <span class="info-value">Active</span>
+                    </div>
+                     <div class="info-item">
+                        <span class="info-label">Balance</span>
+                        <span class="info-value">$3,000.00</span>
+                    </div>
+                     <div class="info-item">
+                        <span class="info-label">Expired Date</span>
+                        <span class="info-value">March 24th, 2024</span>
+                    </div>
+                     <div class="info-item">
+                        <span class="info-label">Type Card</span>
+                        <span class="info-value">Master Card</span>
+                    </div>
+                     <div class="info-item">
+                        <span class="info-label">Bank</span>
+                        <span class="info-value">Larana Bank</span>
+                    </div>
+                </div>
+
+                <div class="card saved-contact">
+                    <div class="card-header">
+                        <h3>SAVED CONTACT</h3>
+                        <div class="dots">...</div>
+                    </div>
+                    <div class="contact-list">
+                        <div class="contact-item">
+                            <img src="https://placehold.co/50x50/cccccc/333333?text=A" alt="Alfredo">
+                            <p>Alfredo</p>
+                        </div>
+                         <div class="contact-item">
+                            <img src="https://placehold.co/50x50/cccccc/333333?text=C" alt="Claudia">
+                            <p>Claudia</p>
+                        </div>
+                         <div class="contact-item">
+                            <img src="https://placehold.co/50x50/cccccc/333333?text=C" alt="Cahaya">
+                            <p>Cahaya</p>
+                        </div>
+                         <div class="contact-item">
+                            <img src="https://placehold.co/50x50/cccccc/333333?text=M" alt="Mariana">
+                            <p>Mariana</p>
+                        </div>
+                         <div class="contact-item">
+                            <img src="https://placehold.co/50x50/cccccc/333333?text=M" alt="Marceline">
+                            <p>Marceline</p>
+                        </div>
+                         <div class="contact-item">
+                            <img src="https://placehold.co/50x50/cccccc/333333?text=T" alt="Teddy">
+                            <p>Teddy</p>
+                        </div>
+                         <div class="contact-item">
+                            <img src="https://placehold.co/50x50/cccccc/333333?text=Y" alt="Yael">
+                            <p>Yael</p>
+                        </div>
+                        </div>
+                </div>
+
+                <button class="add-new-card-button">ADD NEW CARD</button>
+
+            </section>
+        </main>
+    </div>
+
+    <div class="overlay"></div>
+    
+    <script defer src="./functions.js"></script>
+<script src="studentsRoutes.js"></script>
+
+</body>
+</html>

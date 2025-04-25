@@ -1,0 +1,737 @@
+/* Basic Reset and Body Styling */
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #1e1e1e; /* Dark background */
+    color: #ffffff; /* White text */
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll when sidebar is off-screen */
+}
+
+.dashboard-wrapper {
+    display: flex;
+    min-height: 100vh;
+    position: relative; /* Needed for overlay positioning */
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    background-color: #2a2a2a; /* Darker sidebar */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    /* Add transition for smooth opening/closing */
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000; /* Ensure sidebar is above other content */
+}
+
+.logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: #00aaff; /* Accent color for logo */
+}
+
+.navigation {
+    width: 100%;
+    margin-bottom: auto; /* Push upgrade section to the bottom */
+}
+
+.navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navigation li {
+    margin-bottom: 15px;
+}
+
+.navigation a {
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navigation a:hover,
+.navigation a.active {
+    background-color: #3a3a3a; /* Slightly lighter on hover/active */
+    color: #ffffff;
+}
+
+.navigation .icon {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+.upgrade-priority {
+    background-color: #3a3a3a;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    color: #cccccc;
+    position: relative; /* For the dots */
+}
+
+.upgrade-priority h4 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #00aaff; /* Accent color */
+}
+
+.upgrade-priority p {
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.upgrade-priority .dots {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #cccccc;
+}
+
+
+/* Main Content Styling */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.main-header h2 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #ffffff;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: #3a3a3a;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-left: 5px;
+}
+
+.search-box input {
+    border: none;
+    background: none;
+    color: #ffffff;
+    padding: 5px;
+    outline: none;
+}
+
+.search-box input::placeholder {
+    color: #cccccc;
+}
+
+.header-actions .icon {
+    font-size: 1.3em;
+    color: #cccccc;
+    cursor: pointer;
+}
+
+/* Menu Toggle Button Styling */
+.menu-toggle {
+    display: none; /* Hidden by default */
+    background: none;
+    border: none;
+    color: #ffffff; /* White color for the icon */
+    font-size: 1.8em; /* Adjust size as needed */
+    cursor: pointer;
+    padding: 0;
+    margin-right: 10px; /* Space between button and search */
+}
+
+.icon:hover {
+    color: #00aaff; /* Accent color on hover */
+}
+
+
+/* Content Grid Styling */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px;
+}
+
+.card {
+    background-color: #2a2a2a; /* Card background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #ffffff;
+}
+
+.card-header .dots {
+     font-size: 1.2em;
+    font-weight: bold;
+    color: #cccccc;
+}
+
+/* Specific Card Styling */
+
+.calendar-container {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    padding: 5px;
+}
+
+.calendar-header {
+    color: white;
+    padding: 15px 10px; /* Added horizontal padding */
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Vertically center items */
+    gap: 5px;
+}
+
+.calendar-header h2 {
+    margin: 0;
+    font-size: 1.6em;
+    color: #00aaff;
+    flex-grow: 1; /* Allow the title to take available space */
+}
+
+.nav-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0; /* Remove top margin */
+}
+
+.calendar-table th, .calendar-table td {
+    padding: 10px 5px; /* Adjusted padding */
+    text-align: center;
+    border: 1px solid #eee;
+    width: calc(100% / 7); /* Ensure equal width for cells */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+.calendar-table th {
+    background-color: #0088cc;
+    font-size: 0.8em; /* Slightly smaller font for headers */
+    text-transform: uppercase; /* Uppercase day names */
+    color: #e9e9e9e5;
+}
+
+.calendar-table td {
+    font-size: 1em;
+    cursor: pointer; /* Indicate that dates might be interactive */
+    transition: background-color 0.2s ease;
+    position: relative; /* Needed for positioning the span */
+    
+}
+
+.calendar-table td:hover:not(.inactive) {
+    background-color: #00aaff9d;
+}
+
+
+.calendar-table td.inactive {
+    color: #cccccc96;
+    cursor: default; /* No pointer cursor for inactive days */
+    background-color: #3a3a3a;
+}
+
+.calendar-table td.inactive:hover {
+    background-color: transparent; /* No hover effect for inactive days */
+}
+
+
+.calendar-table td.current-day {
+    background-color: #00aaff79;
+    color: white;
+    /* Removed position and z-index here, handled by the span */
+}
+
+/* Style for the span inside the current-day cell to center the number */
+.calendar-table td.current-day span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Style for the students profile div */  
+.containment-holder{
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    border-radius: 30px;
+
+}
+/* Style the track (the area the scrollbar moves along) */
+::-webkit-scrollbar-track {
+    background: #d30000; /* Light grey background */
+    border-radius: 30px; /* Rounded corners for the track */
+  }
+  
+  /* Style the scrollbar itself (the draggable thumb) */
+  ::-webkit-scrollbar-thumb {
+    background: #880000; /* Dark grey thumb */
+    border-radius: 10px; /* Rounded corners for the thumb */
+  }
+  
+  /* Style the scrollbar thumb on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #55555500; /* Even darker grey on hover */
+  }
+  
+  /* Optional: Style the scrollbar width */
+  
+  /* Optional: Style the corner where scrollbars meet */
+  ::-webkit-scrollbar-corner {
+    background: #f1f1f100; /* Match the track background */
+  }
+  
+.containment {
+    margin: auto;
+    background: #fff;
+    width: 100%;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.containment > h1 {
+    text-align: center;
+    color: #333;
+}
+.profile-item {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+.profile-item strong {
+    display: inline-block;
+    width: 150px; /* Fixed width for labels */
+    color: #555;
+}
+#loading-message, #error-message {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+#loading-message {
+    background-color: #e9e9e9;
+    color: #333;
+}
+#error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+#profile-details {
+    margin-top: 20px;
+}
+/* Debit Card Styling */
+.debit-card {
+    color: #1e1e1e; /* Dark text on accent background */
+    position: relative;
+    max-height: 500px;
+}
+
+.debit-card .card-header h3,
+.debit-card .card-type,
+.debit-card .card-details p {
+    color: #1e1e1e; /* Dark text */
+}
+
+.debit-card .card-type {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.debit-card .card-number {
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.debit-card .balance {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.debit-card .expiry,
+.debit-card .owner,
+.debit-card .card-brand {
+    font-size: 0.9em;
+    margin-bottom: 3px;
+}
+
+.debit-card .card-icon {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    font-size: 4em;
+    color: rgba(0, 0, 0, 0.1); /* Semi-transparent dark color */
+    transform: rotate(20deg);
+}
+
+
+.transactions ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.transactions li {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #3a3a3a; /* Separator */
+}
+
+.transactions li:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.transaction-item .category-icon {
+    font-size: 1.5em;
+    color: #00aaff; /* Accent color */
+}
+
+.transaction-details {
+    flex-grow: 1;
+}
+
+.transaction-details .name {
+    font-weight: bold;
+    margin: 0 0 3px 0;
+}
+
+.transaction-details .date-time {
+    font-size: 0.9em;
+    color: #cccccc;
+    margin: 0;
+}
+
+.transaction-info {
+    text-align: right;
+}
+
+.transaction-info .type {
+    font-size: 0.9em;
+    margin: 0 0 3px 0;
+    color: #cccccc;
+}
+
+.transaction-info .status {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.transaction-info .status.success {
+    color: green;
+}
+/* Add styles for other statuses like pending, failed */
+
+.transaction-item .amount {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+
+.card-info .info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #3a3a3a; /* Separator */
+}
+
+.card-info .info-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.card-info .info-label {
+    font-size: 0.9em;
+    color: #cccccc;
+}
+
+.card-info .info-value {
+     font-size: 0.9em;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+
+.saved-contact .contact-list {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto; /* Enable horizontal scrolling if contacts exceed width */
+    padding-bottom: 10px; /* Add padding for scrollbar */
+}
+
+.saved-contact .contact-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.saved-contact .contact-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Circular images */
+    object-fit: cover;
+    margin-bottom: 5px;
+    border: 2px solid #00aaff; /* Accent border */
+}
+
+.saved-contact .contact-item p {
+    font-size: 0.8em;
+    color: #cccccc;
+    margin: 0;
+}
+
+.add-new-card-button {
+    display: block; /* Make button full width */
+    width: 100%;
+    padding: 15px;
+    background-color: #00aaff; /* Accent color */
+    color: #1e1e1e; /* Dark text */
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Space above the button */
+}
+
+.add-new-card-button:hover {
+    background-color: #0088cc; /* Darker accent on hover */
+}
+
+/* Overlay for when sidebar is open on small screens */
+.overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    z-index: 999; /* Below sidebar, above content */
+    cursor: pointer;
+}
+
+/* Overlay visible class to show the
+
+
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .dashboard-wrapper {
+        flex-direction: column; /* Stack sidebar and main content */
+    }
+
+    /* Fixed header for small screens */
+    .main-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: #1e1e1e; /* Match body/main background */
+        padding: 15px 20px; /* Adjust padding */
+        z-index: 1001; /* Ensure header is above sidebar and overlay */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        flex-direction: row; /* Keep header items in a row */
+        align-items: center;
+        justify-content: space-between; /* Distribute space */
+        margin-bottom: 0; /* Remove margin */
+    }
+
+    .main-header h2 {
+         margin-bottom: 0; /* Remove bottom margin */
+         font-size: 1.5em; /* Adjust font size */
+    }
+
+    .header-actions {
+        width: auto; /* Auto width */
+        justify-content: flex-end; /* Align items to the right */
+        gap: 15px; /* Adjust gap */
+    }
+
+    .menu-toggle {
+        display: block; /* Show menu button on small screens */
+    }
+
+    .search-box {
+        flex-grow: 0; /* Don't let search box grow */
+        width: 120px; /* Give search box a fixed width or adjust as needed */
+         padding: 3px 8px; /* Adjust padding */
+    }
+
+     .search-box input {
+         padding: 3px; /* Adjust input padding */
+         font-size: 0.9em;
+     }
+
+     .header-actions .icon {
+         font-size: 1.1em; /* Adjust icon size */
+     }
+
+
+    /* Sidebar positioning and height for small screens */
+    .sidebar {
+        position: absolute; /* Fix sidebar position */
+        top: 70px; /* Position below the header (adjust if header height changes) */
+        left: -300px; /* Hide sidebar off-screen */
+        height: 100%;
+        overflow-y: auto; /* Enable scrolling if content is long */
+        padding-top: 20px; /* Restore normal padding */
+        padding-bottom: 20px; /* Add bottom padding */
+    }
+
+    .sidebar.open {
+        transform: translateX(300px); /* Slide sidebar into view */
+    }
+
+    .sidebar .logo {
+        display: block; /* Show logo in fixed sidebar */
+        position: static; /* Position within the flow of the sidebar */
+        margin-bottom: 20px; /* Adjust margin */
+    }
+
+    .sidebar .navigation {
+        margin-bottom: auto; /* Keep navigation at the top */
+    }
+
+    .sidebar .navigation ul {
+        flex-direction: column; /* Stack nav items vertically */
+        gap: 0; /* Remove gap */
+    }
+
+    .sidebar .navigation li {
+        margin-bottom: 15px; /* Restore vertical margin */
+    }
+
+     .sidebar .navigation a {
+         padding: 10px; /* Restore padding */
+         font-size: 1.1em; /* Restore size */
+     }
+
+
+     .sidebar .navigation .icon {
+         margin-right: 10px; /* Restore margin */
+         font-size: 1.2em; /* Restore size */
+     }
+
+
+    .upgrade-priority {
+        display: block; /* Show upgrade section in fixed sidebar */
+        margin-top: 20px;
+    }
+
+    .main-content {
+        padding: 15px; /* Adjust padding */
+        margin-top: 70px; /* Add top margin to prevent content from being hidden by fixed header */
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr; /* Single column layout */
+    }
+
+    .debit-card .card-icon {
+        font-size: 3em; /* Adjust icon size */
+    }
+
+    /* Show overlay when sidebar is open */
+    .overlay.visible {
+        display: block;
+    }
+}
+
+/* Optional: Style for scrollbar in saved contacts */
+.saved-contact .contact-list::-webkit-scrollbar {
+    height: 8px;
+}
+
+.saved-contact .contact-list::-webkit-scrollbar-track {
+    background: #3a3a3a; /* Darker track */
+    border-radius: 10px;
+}
+
+.saved-contact .contact-list::-webkit-scrollbar-thumb {
+    background: #555; /* Scrollbar color */
+    border-radius: 10px;
+}
+
+.saved-contact .contact-list::-webkit-scrollbar-thumb:hover {
+    background: #777; /* Darker on hover */
+}
+
