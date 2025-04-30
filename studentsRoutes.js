@@ -382,7 +382,7 @@ function displayNotifications(notifications) {
             </div>
             <div class="notification-info">
                  <p class="notification-type">${notification.target_role || 'General'}</p>
-                 </div>
+            </div>
         `;
 
         // Append the created list item to the UL
@@ -396,3 +396,46 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchStudentProfile(); // Call the profile and QR fetch function
     fetchStudentNotifications(); // Call the notifications fetch function
 });
+
+ // Get the button and the notification box elements
+ const toggleNotificationBtn = document.getElementById('toggleNotificationBtn');
+ const notificationBox = document.getElementById('myNotification');
+
+ // Add event listener to the button to toggle the notification
+ toggleNotificationBtn.addEventListener('click', () => {
+     // Check if the box currently has the 'show' class
+     const isShowing = notificationBox.classList.contains('show');
+
+     if (isShowing) {
+         // If it's showing, start the hiding animation
+         notificationBox.classList.remove('show');
+         // Wait for the transition to finish before setting display to none
+         notificationBox.addEventListener('transitionend', function handler() {
+             notificationBox.style.display = 'none';
+             notificationBox.removeEventListener('transitionend', handler); // Remove listener after it runs
+         });
+     } else {
+         // If it's hidden, set display to block immediately and then add 'show' class
+         notificationBox.style.display = 'block';
+         // Use a small timeout to allow display:block to take effect before starting transition
+         setTimeout(() => {
+              notificationBox.classList.add('show');
+         }, 10); // A small delay, like 10ms, is often sufficient
+     }
+ });
+
+ // Add event listener to the notification box to hide it when clicked
+ // This listener remains the same as before
+ notificationBox.addEventListener('click', () => {
+      // Check if the box currently has the 'show' class
+     const isShowing = notificationBox.classList.contains('show');
+     if (isShowing) {
+          // If it's showing, start the hiding animation
+         notificationBox.classList.remove('show');
+         // Wait for the transition to finish before setting display to none
+         notificationBox.addEventListener('transitionend', function handler() {
+             notificationBox.style.display = 'none';
+             notificationBox.removeEventListener('transitionend', handler); // Remove listener after it runs
+         });
+     }
+ });

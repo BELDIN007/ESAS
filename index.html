@@ -17,7 +17,7 @@
             </div>
             <nav class="navigation">
                 <ul>
-                    <li><a href="#" class="active"><i class="icon">🏠</i> Dashboard</a></li>
+                    <li><a href="#" class="active"><i c ass="icon">🏠</i> Dashboard</a></li>
                     <li><a href="#"><i class="icon">💡</i> Insight</a></li>
                     <li><a href="#"><i class="icon">📊</i> Transaction</a></li>
                     <li><a href="#"><i class="icon">💳</i> Account</a></li>
@@ -40,41 +40,77 @@
                         <input type="text" placeholder="Search Here">
                         <i class="icon">🔍</i>
                     </div>
-                    <i class="icon">🔔</i>
                     <i class="icon">👤</i>
-                    <button class="menu-toggle" aria-label="Toggle menu">
+                    <button id="toggleNotificationBtn">
+                    <i class="icon">🔔</i>
+                    </button>
+                    <button  class="menu-toggle" aria-label="Toggle menu">
                         <i class="icon">☰</i>
                     </button>
                 </div>
             </header>
 
             <section class="content-grid">
-                <div class="card debit-card">
-                    <div class="containment-holder">
-                        <div class="containment">
-                            <h1>STUDENT PROFILE</h1>
-                    
-                            <div id="loading-message">Loading profile...</div>
-                            <div id="error-message" style="display: none;"></div>
-                    
-                            <div id="profile-details" style="display: none;">
-                                <div class="profile-item"><strong>Student ID:</strong> <span id="student-id"></span></div>
-                                <div class="profile-item"><strong>Name:</strong> <span id="first-name"></span> <span id="last-name"></span></div>
-                                <div class="profile-item"><strong>Matriculation Number:</strong> <span id="matriculation-number"></span></div>
-                                <div class="profile-item"><strong>Level:</strong> <span id="level"></span></div>
-                                <div class="profile-item"><strong>Program:</strong> <span id="intended-program"></span></div>
-                                <div class="profile-item"><strong>Department:</strong> <span id="department-name"></span></div>
-                                <div class="profile-item"><strong>Email:</strong> <span id="email"></span></div>
-                                <div class="profile-item"><strong>Contact Number:</strong> <span id="contact-number"></span></div>
-                                <div class="profile-item"><strong>Date of Birth:</strong> <span id="date-of-birth"></span></div>
-                                <div class="profile-item"><strong>Gender:</strong> <span id="gender"></span></div> </div>
-                        </div>
+
+            <div id="myNotification" class="notification-box">
+                <div class="card notifications-card"> 
+                    <div class="card-header">
+                        <h3>NOTIFICATIONS</h3> 
+                    <div class="dots">...
+                        
                     </div>
-                
+                    </div>
+            
+                    <div id="notifications-loading">
+                    Loading notifications...
+                    </div>
+                    <div id="notifications-error" style="display: none;">
+
+                    </div>
+            
+                    <ul id="notifications-list">
+                    </ul>
                 </div>
+            </div>
+            
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3>STUDENT PROFILE</h3>
+                    <div class="dots">...</div> </div>
+            
+                <div id="loading-message">Loading profile...</div>
+                <div id="error-message" style="display: none;"></div>
+            
+                <div id="profile-details" style="display: none;">
+                    <div class="info-item">
+                        <span class="info-label">Student ID:</span>
+                        <span class="info-value" id="student-id"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Name:</span>
+                        <span class="info-value"><span id="first-name"></span> <span id="last-name"></span></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Matriculation Number:</span>
+                        <span class="info-value" id="matriculation-number"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Level:</span>
+                        <span class="info-value" id="level"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Department:</span>
+                        <span class="info-value" id="department-name"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email:</span>
+                        <span class="info-value" id="email"></span>
+                    </div>
+                </div>
+            </div>
 
                 
-                <div class="card qr-code-main">
+            <div class="card qr-code-main">
                     <div class="qr-code-holder">
                         <div class="qr-code">
                             <h1>QR CODE</h1>
@@ -82,27 +118,19 @@
                             <p>Scan to mark attendance</p>
                         </div>
                     </div>
-                </div>
+            </div>
                 
-                <div class="card transactions">
-                    <div class="card notifications-card"> <div class="card-header">
-                        <h3>NOTIFICATIONS</h3> <div class="dots">...</div>
-                    </div>
-                
-                    <div id="notifications-loading">Loading notifications...</div>
-                    <div id="notifications-error" style="display: none;"></div>
-                
-                    <ul id="notifications-list">
-                        </ul>
-                </div>
-               </div>
+            <div class="card transactions">
+                   
+            </div>
 
-                <div class="card income-spending">
+            <div class="card income-spending">
                     <div class="calendar-container">
                         <div class="calendar-header">
                             <div class="calendar-header">
                             <button id="prev-month" class="nav-button">❮</button>
-                            <h2>Month Year</h2> <button id="next-month" class="nav-button">❯</button>
+                            <h2>Month Year</h2> 
+                            <button id="next-month" class="nav-button">❯</button>
                         </div>
                         </div>
                         <table class="calendar-table">
@@ -165,10 +193,10 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                    
-                </div>
-                <div class="card card-info">
+                    </div> 
+            </div>
+            
+            <div class="card card-info">
                     <div class="card-header">
                         <h3>CARD INFO</h3>
                         <div class="dots">...</div>
@@ -201,9 +229,9 @@
                         <span class="info-label">Bank</span>
                         <span class="info-value">Larana Bank</span>
                     </div>
-                </div>
+            </div>
 
-                <div class="card saved-contact">
+            <div class="card saved-contact">
                     <div class="card-header">
                         <h3>SAVED CONTACT</h3>
                         <div class="dots">...</div>
@@ -238,9 +266,9 @@
                             <p>Yael</p>
                         </div>
                         </div>
-                </div>
+            </div>
 
-                <button class="add-new-card-button">ADD NEW CARD</button>
+            <button class="add-new-card-button">ADD NEW CARD</button>
 
             </section>
         </main>
