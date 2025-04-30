@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Dashboard Layout</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     </head>
 <body>
 
@@ -51,7 +52,7 @@
                 <div class="card debit-card">
                     <div class="containment-holder">
                         <div class="containment">
-                            <h1>Student Profile</h1>
+                            <h1>STUDENT PROFILE</h1>
                     
                             <div id="loading-message">Loading profile...</div>
                             <div id="error-message" style="display: none;"></div>
@@ -71,6 +72,30 @@
                     </div>
                 
                 </div>
+
+                
+                <div class="card qr-code-main">
+                    <div class="qr-code-holder">
+                        <div class="qr-code">
+                            <h1>QR CODE</h1>
+                            <div id="qrcode"></div>
+                            <p>Scan to mark attendance</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card transactions">
+                    <div class="card notifications-card"> <div class="card-header">
+                        <h3>NOTIFICATIONS</h3> <div class="dots">...</div>
+                    </div>
+                
+                    <div id="notifications-loading">Loading notifications...</div>
+                    <div id="notifications-error" style="display: none;"></div>
+                
+                    <ul id="notifications-list">
+                        </ul>
+                </div>
+               </div>
 
                 <div class="card income-spending">
                     <div class="calendar-container">
@@ -143,74 +168,6 @@
                     </div>
                     
                 </div>
-
-                
-
-                <div class="card transactions">
-                     <div class="card-header">
-                         <h3>TRANSACTION</h3>
-                         <div class="dots">...</div>
-                     </div>
-                    <ul>
-                        <li>
-                            <div class="transaction-item">
-                                <i class="icon category-icon">🏥</i>
-                                <div class="transaction-details">
-                                    <p class="name">HOSPITAL</p>
-                                    <p class="date-time">Yesterday, 2:00 PM</p>
-                                </div>
-                                <div class="transaction-info">
-                                    <p class="type">PAYMENT</p>
-                                     <p class="status success">Success</p>
-                                </div>
-                                <p class="amount">- $1,900</p>
-                            </div>
-                        </li>
-                         <li>
-                            <div class="transaction-item">
-                                <i class="icon category-icon">👤</i>
-                                <div class="transaction-details">
-                                    <p class="name">ALFREDO TORRES</p>
-                                    <p class="date-time">Yesterday, 10:00 AM</p>
-                                </div>
-                                <div class="transaction-info">
-                                    <p class="type">PAYMENT</p>
-                                     <p class="status success">Success</p>
-                                </div>
-                                <p class="amount">+ $2,000</p>
-                            </div>
-                        </li>
-                         <li>
-                            <div class="transaction-item">
-                                <i class="icon category-icon">👤</i>
-                                <div class="transaction-details">
-                                    <p class="name">CLAUDIA ALVES</p>
-                                    <p class="date-time">Yesterday, 4:00 AM</p>
-                                </div>
-                                <div class="transaction-info">
-                                    <p class="type">PAYMENT</p>
-                                     <p class="status success">Success</p>
-                                </div>
-                                <p class="amount">+ $2,500</p>
-                            </div>
-                        </li>
-                         <li>
-                            <div class="transaction-item">
-                                <i class="icon category-icon">⚡</i>
-                                <div class="transaction-details">
-                                    <p class="name">INSTALLMENT</p>
-                                    <p class="date-time">1 Month Ago, 4:00 PM</p>
-                                </div>
-                                <div class="transaction-info">
-                                    <p class="type">SUBSCRIPTION</p>
-                                     <p class="status success">Success</p>
-                                </div>
-                                <p class="amount">- $200</p>
-                            </div>
-                        </li>
-                        </ul>
-                </div>
-
                 <div class="card card-info">
                     <div class="card-header">
                         <h3>CARD INFO</h3>

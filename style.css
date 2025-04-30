@@ -187,6 +187,7 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
+    max-height: 500px;
 }
 
 .card-header {
@@ -320,6 +321,52 @@ body {
     border-radius: 30px;
 
 }
+
+/*** stylethe qr code hoder */
+
+/* Specific styling for the main QR code section */
+.qr-code-main {
+    /* Add any specific styles for this main container if needed,
+       but the .card styles might be sufficient */
+       background-color: #00aaff;
+}
+
+/* Styling for the holder div, adds padding around the QR code area */
+.qr-code-holder {
+    border: 1px solid #eee; /* Light border around the QR area */
+    padding: 15px; /* Padding inside the holder */
+    border-radius: 6px; /* Slightly rounded corners */
+    background-color: #f9f9f9; /* Very light background */
+}
+
+/* Styling for the inner QR code content div */
+.qr-code {
+    /* Styles for the content directly around the QR code */
+}
+
+/* Styling for the heading inside the QR code area */
+.qr-code h1 {
+    font-size: 1.2em; /* Adjust heading size */
+    color: #333; /* Dark grey color */
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 10px; /* Space below the heading */
+}
+
+/* Styling for the QR code image (or canvas/svg) */
+.qr-code img {
+    display: block; /* Make the image a block element */
+    margin: 0 auto 15px auto; /* Center the image and add space below */
+    max-width: 100%; /* Ensure image is responsive within its container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 4px; /* Slightly round the image corners */
+}
+
+/* Styling for the paragraph below the QR code */
+.qr-code p {
+    font-size: 0.9em; /* Adjust paragraph size */
+    color: #666; /* Medium grey color */
+    margin-bottom: 0; /* Remove bottom margin */
+}
 /* Style the track (the area the scrollbar moves along) */
 ::-webkit-scrollbar-track {
     background: #d30000; /* Light grey background */
@@ -346,7 +393,6 @@ body {
   
 .containment {
     margin: auto;
-    background: #fff;
     width: 100%;
     padding: 20px;
     border-radius: 8px;
@@ -354,17 +400,17 @@ body {
 }
 .containment > h1 {
     text-align: center;
-    color: #333;
+    color: #00aaff;
 }
 .profile-item {
     margin-bottom: 15px;
     padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #00aaff;
 }
 .profile-item strong {
     display: inline-block;
     width: 150px; /* Fixed width for labels */
-    color: #555;
+    color: #00aaff;
 }
 #loading-message, #error-message {
     text-align: center;
@@ -384,9 +430,15 @@ body {
 #profile-details {
     margin-top: 20px;
 }
+
+.notifications-card{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
 /* Debit Card Styling */
 .debit-card {
-    color: #1e1e1e; /* Dark text on accent background */
+    color: white    ; /* Dark text on accent background */
     position: relative;
     max-height: 500px;
 }
