@@ -22,13 +22,27 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '@CyberBles0987654321')
 app.config['SECRET_KEY'] = SECRET_KEY # Optional: add to Flask config
 
 
-# Database connection details (using environment variables for security)
-print(f"DB_PORT from env: {os.getenv('DB_PORT')}")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = int(os.getenv("DB_PORT"))
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER")
-DB_PASS = os.getenv("DB_PASS")
+# # Database connection details (using environment variables for security)
+# print(f"DB_PORT from env: {os.getenv('DB_PORT')}")
+# DB_HOST = os.getenv("DB_HOST")
+# DB_PORT = int(os.getenv("DB_PORT"))
+# DB_NAME = os.getenv("DB_NAME")
+# DB_USER = os.getenv("DB_USER")
+# DB_PASS = os.getenv("DB_PASS")
+
+# New way (using DATABASE_URL)
+database_url = os.environ.get('DATABASE_URL')
+
+if database_url:
+    # SQLAlchemy often expects 'postgresql+drivername://' for some drivers like psycopg2
+    # So you might need to replace 'postgresql://'
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url.replace('postgresql://', 'postgresql+psycopg2://')
+else:
+    # Fallback for local development (optional, you can remove or adjust)
+    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://your_local_user:your_local_pass@localhost:5432/your_local_db" # Or whatever your local setup is
+
+
+# db = SQLAlchemy(app) # Initialize SQLAlchemy after config
 
 
 ######################################################################################################################################################
