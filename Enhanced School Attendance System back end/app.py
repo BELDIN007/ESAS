@@ -11,6 +11,7 @@ import jwt # Import PyJWT
 import secrets
 from flask_cors import CORS
 from jwt.exceptions import InvalidTokenError, ExpiredSignatureError, DecodeError # *** Import specific exception classes ***
+from flask_sqlalchemy import SQLAlchemy
 
 
 load_dotenv()  # Load environment variables from .env file
@@ -23,26 +24,61 @@ app.config['SECRET_KEY'] = SECRET_KEY # Optional: add to Flask config
 
 
 # # Database connection details (using environment variables for security)
-# print(f"DB_PORT from env: {os.getenv('DB_PORT')}")
-# DB_HOST = os.getenv("DB_HOST")
-# DB_PORT = int(os.getenv("DB_PORT"))
-# DB_NAME = os.getenv("DB_NAME")
-# DB_USER = os.getenv("DB_USER")
-# DB_PASS = os.getenv("DB_PASS")
+print(f"DB_PORT from env: {os.getenv('DB_PORT')}")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = int(os.getenv("DB_PORT"))
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASS = os.getenv("DB_PASS")
 
-# New way (using DATABASE_URL)
+
 database_url = os.environ.get('DATABASE_URL')
 
 if database_url:
-    # SQLAlchemy often expects 'postgresql+drivername://' for some drivers like psycopg2
-    # So you might need to replace 'postgresql://'
+    # If DATABASE_URL is set, use it for SQLAlchemy
+    # We replace 'postgresql://' with 'postgresql+psycopg2://' to tell SQLAlchemy
+    # to use the psycopg2 driver. Ensure psycopg2-binary is installed (pip install psycopg2-binary).
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url.replace('postgresql://', 'postgresql+psycopg2://')
+    print("Using DATABASE_URL for SQLAlchemy configuration.") # For debugging
+
 else:
-    # Fallback for local development (optional, you can remove or adjust)
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://your_local_user:your_local_pass@localhost:5432/your_local_db" # Or whatever your local setup is
+    # Fallback for local development if DATABASE_URL is NOT set
+    # We read the individual local DB variables from the environment (loaded by load_dotenv)
+    local_db_user = os.getenv("DB_USER")
+    local_db_pass = os.getenv("DB_PASS")
+    local_db_host = os.getenv("DB_HOST")
+    local_db_port = os.getenv("DB_PORT") # This will be a string
+    local_db_name = os.getenv("DB_NAME")
+
+    # Construct the SQLAlchemy URI using the local variables
+    # We also include the driver +psycopg2 here
+    if local_db_user and local_db_pass and local_db_host and local_db_port and local_db_name:
+         app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql+psycopg2://{local_db_user}:{local_db_pass}@{local_db_host}:{local_db_port}/{local_db_name}"
+         print("DATABASE_URL not set, using local DB configuration from .env.") # For debugging
+    else:
+         # If neither DATABASE_URL nor local DB variables are fully set
+         print("WARNING: DATABASE_URL not set and local DB config missing. Database features may not work.")
+         # Set URI to None or a dummy value - SQLAlchemy will raise an error if you try to use db without a valid URI
+         app.config['SQLALCHEMY_DATABASE_URI'] = None
 
 
-# db = SQLAlchemy(app) # Initialize SQLAlchemy after config
+
+db = SQLAlchemy(app)
+
+
+# # New way (using DATABASE_URL)
+# database_url = os.environ.get('DATABASE_URL')
+
+# if database_url:
+#     # SQLAlchemy often expects 'postgresql+drivername://' for some drivers like psycopg2
+#     # So you might need to replace 'postgresql://'
+#     app.config['SQLALCHEMY_DATABASE_URI'] = database_url.replace('postgresql://', 'postgresql+psycopg2://')
+# else:
+#     # Fallback for local development (optional, you can remove or adjust)
+#     app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://your_local_user:your_local_pass@localhost:5432/your_local_db" # Or whatever your local setup is
+
+
+# # db = SQLAlchemy(app) # Initialize SQLAlchemy after config
 
 
 ######################################################################################################################################################
