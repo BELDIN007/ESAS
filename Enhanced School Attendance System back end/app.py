@@ -12,6 +12,7 @@ import secrets
 from flask_cors import CORS
 from jwt.exceptions import InvalidTokenError, ExpiredSignatureError, DecodeError # *** Import specific exception classes ***
 from flask_sqlalchemy import SQLAlchemy
+# from sqlalchemy import text
 
 
 load_dotenv()  # Load environment variables from .env file
