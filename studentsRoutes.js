@@ -1,7 +1,7 @@
 // --- Configuration ---
 // Replace with the actual URL where your Flask app is running
 // Example: If running locally on port 5000
-const BASE_URL = "http://127.0.0.1:5000"; // Standard loopback address
+const BASE_URL = "https://esas.onrender.com"; // Standard loopback address
 
 const PROFILE_ENDPOINT = "/student/profile";
 const NOTIFICATIONS_ENDPOINT = "/student/notifications"; // Endpoint for notifications
