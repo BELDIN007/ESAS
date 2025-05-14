@@ -61,27 +61,57 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert(result.message || 'Login successful!'); // Show a success message (use backend message if available)
 
                     // *** IMPORTANT: Handle successful login based on your backend's response ***
-                    // Your backend should ideally send back a token (like JWT) or confirm session creation.
-                    // You need to store this token/session ID securely for future authenticated requests.
-                    // Example (storing a token in localStorage - be mindful of security for sensitive data):
+                    // Your backend should ideally send back a token (like JWT) AND the user's role.
+
+                    let redirected = false; // Flag to track if redirection happened
+
                     // Check if the backend response contains a 'token' field
                     if (result.token) {
                          // Store the token in localStorage under the key 'authToken'
                          localStorage.setItem('authToken', result.token);
                          console.log('Token stored in localStorage:', result.token); // Optional: for debugging
+
+                         // --- Check for the user's role and redirect accordingly ---
+                         if (result.role) { // Check if the backend response includes the role
+                             console.log('User role received:', result.role); // Optional: for debugging
+
+                             if (result.role === 'student') {
+                                 window.location.href = 'student_dashboard.html'; // Redirect to student dashboard
+                                 redirected = true;
+                             } else if (result.role === 'lecturer') {
+                                 window.location.href = 'lecturer_dashboard.html'; // Redirect to lecturer dashboard
+                                 redirected = true;
+                             } else if (result.role === 'admin') {
+                                 window.location.href = 'admin_dashboard.html'; // Redirect to admin dashboard
+                                 redirected = true;
+                             } else {
+                                 console.warn('Unknown user role received:', result.role);
+                                 alert('Login successful, but user role is unknown. Redirecting to a default page.');
+                                 // Redirect to a default page or show an error if role is unexpected
+                                 window.location.href = 'default_dashboard.html'; // Replace with a default page
+                                 redirected = true;
+                             }
+                         } else {
+                             console.warn('Login successful, but no user role received from backend.');
+                             alert('Login successful, but user role could not be determined. Redirecting to a default page.');
+                             // Redirect to a default page if role is missing
+                             window.location.href = 'default_dashboard.html'; // Replace with a default page
+                             redirected = true;
+                         }
+
                     } else {
                          console.warn('Login successful, but no token received from backend.');
-                         // Handle this case - perhaps the backend should always send a token on success
-                         // You might want to show an error or prevent redirection if no token is received
                          alert('Login successful, but failed to receive authentication token.');
-                         // Maybe don't redirect if no token? Or redirect to a page explaining the issue?
-                         // For now, we'll still redirect, but log the warning.
+                         // Handle this case - perhaps the backend should always send a token on success
+                         // If no token, don't redirect to a protected page
+                         // Maybe redirect to an error page or stay on login with a specific message
+                         // For now, we'll stay on the login page and show an alert.
                     }
 
+                    // If not redirected by role, you might have a fallback here,
+                    // but the logic above should cover all successful scenarios where a token is received.
+                    // If no token was received, we don't redirect to a dashboard.
 
-                    // Redirect the user to the next page (e.g., dashboard, home page)
-                    // *** IMPORTANT: Replace 'dashboard.html' with the actual URL of your next page ***
-                    window.location.href = 'https://beldin007.github.io/ESAS/Student_home.html'; // Example: 'https://my-awesome-app.onrender.com/dashboard'
 
                 } else { // Handle error responses (e.g., 401 Unauthorized, 400 Bad Request, 500 Internal Server Error)
                     // Show an error message to the user
