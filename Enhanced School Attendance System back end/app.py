@@ -1604,7 +1604,8 @@ def login_user():
             # Return the JWT in the response
             return jsonify({
                 "message": "Login successful!",
-                "token": token # *** Return the generated token ***
+                "token": token, # *** Return the generated token ***
+                "role": role    # *** ADD THIS LINE to return the user's role ***
             }), 200
         else:
             # Password does not match the hash
