@@ -22,4 +22,4 @@ tzdata==2025.2
 Werkzeug==3.1.3
 Flask-SQLAlchemy==3.0.2
 Flask-Migrate==4.0.0
-flask-jwt-extended==5.3.0
+Flask-jwt-extended>=4.7.1

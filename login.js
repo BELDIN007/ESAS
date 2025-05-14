@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Parse the JSON response from the backend
                 const result = await response.json();
+                console.log('Backend response:', result); // Optional: for debugging
 
                 // --- Handle the Backend Response ---
 
@@ -82,21 +83,21 @@ document.addEventListener('DOMContentLoaded', () => {
                                  window.location.href = 'lecturer_dashboard.html'; // Redirect to lecturer dashboard
                                  redirected = true;
                              } else if (result.role === 'admin') {
-                                 window.location.href = 'admin_dashboard.html'; // Redirect to admin dashboard
+                                 window.location.href = './admin_frontend/welcome.html'; // Redirect to admin dashboard
                                  redirected = true;
                              } else {
-                                 console.warn('Unknown user role received:', result.role);
-                                 alert('Login successful, but user role is unknown. Redirecting to a default page.');
-                                 // Redirect to a default page or show an error if role is unexpected
-                                 window.location.href = 'default_dashboard.html'; // Replace with a default page
-                                 redirected = true;
+                                //  console.warn('Unknown user role received:', result.role);
+                                //  alert('Login successful, but user role is unknown. Redirecting to a default page.');
+                                //  // Redirect to a default page or show an error if role is unexpected
+                                //  window.location.href = 'default_dashboard.html'; // Replace with a default page
+                                //  redirected = true;
                              }
                          } else {
-                             console.warn('Login successful, but no user role received from backend.');
-                             alert('Login successful, but user role could not be determined. Redirecting to a default page.');
-                             // Redirect to a default page if role is missing
-                             window.location.href = 'default_dashboard.html'; // Replace with a default page
-                             redirected = true;
+                            //  console.warn('Login successful, but no user role received from backend.');
+                            //  alert('Login successful, but user role could not be determined. Redirecting to a default page.');
+                            //  // Redirect to a default page if role is missing
+                            //  window.location.href = 'default_dashboard.html'; // Replace with a default page
+                            //  redirected = true;
                          }
 
                     } else {
