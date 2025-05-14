@@ -11,8 +11,8 @@ const NOTIFICATIONS_API_URL = `${BASE_URL}${NOTIFICATIONS_ENDPOINT}`;
 // --- IMPORTANT: Get Token from localStorage ---
 // This function will retrieve the JWT token stored during the login process.
 function getAuthToken() {
-    // Retrieve the token using the key you used in login.js
     const token = localStorage.getItem('authToken');
+    console.log('Attempted to retrieve token from localStorage:', token); // Add this line
     return token;
 }
 
