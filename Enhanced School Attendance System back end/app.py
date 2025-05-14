@@ -12,12 +12,13 @@ import secrets
 from flask_cors import CORS
 from jwt.exceptions import InvalidTokenError, ExpiredSignatureError, DecodeError # *** Import specific exception classes ***
 from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token
 # from sqlalchemy import text
 
 
 load_dotenv()  # Load environment variables from .env file
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/admin/*": {"origins": ["http://localhost:5500", "https://your-frontend.onrender.com"]}})
 
 
 SECRET_KEY = os.environ.get('SECRET_KEY', '@CyberBles0987654321')

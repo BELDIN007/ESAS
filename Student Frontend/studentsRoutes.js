@@ -1,7 +1,6 @@
 // --- Configuration ---
-// Replace with the actual URL where your Flask app is running
-// Example: If running locally on port 5000
-const BASE_URL = "https://esas.onrender.com"; // Standard loopback address
+// Replace with the actual URL where your Flask app is running on Render
+const BASE_URL = "https://esas.onrender.com"; // Your Render backend URL
 
 const PROFILE_ENDPOINT = "/student/profile";
 const NOTIFICATIONS_ENDPOINT = "/student/notifications"; // Endpoint for notifications
@@ -9,10 +8,13 @@ const NOTIFICATIONS_ENDPOINT = "/student/notifications"; // Endpoint for notific
 const PROFILE_API_URL = `${BASE_URL}${PROFILE_ENDPOINT}`;
 const NOTIFICATIONS_API_URL = `${BASE_URL}${NOTIFICATIONS_ENDPOINT}`;
 
-// --- Hardcoded Token for Testing (Replace with dynamic retrieval in production) ---
-// Make sure this token is valid and not expired on your backend
-const TEST_AUTH_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2FjY291bnRfaWQiOiJ1c3I1NCIsInJvbGUiOiJzdHVkZW50IiwiZW50aXR5X2lkIjoic3R1MzgifQ.y0pMc_hpJCvKg_0gCcIxrJYsD-EisfzGKpHaaHlbt8s';
-
+// --- IMPORTANT: Get Token from localStorage ---
+// This function will retrieve the JWT token stored during the login process.
+function getAuthToken() {
+    // Retrieve the token using the key you used in login.js
+    const token = localStorage.getItem('authToken');
+    return token;
+}
 
 // --- Function to display an error message ---
 // This function can target different error message elements by ID
@@ -41,7 +43,7 @@ function displayError(message, targetElementId) {
 
     if (profileDetailsDiv) profileDetailsDiv.style.display = 'none';
     if (notificationsListElement) notificationsListElement.innerHTML = ''; // Clear list
-     if (qrcodeDiv) qrcodeDiv.innerHTML = ''; // Clear QR code
+    if (qrcodeDiv) qrcodeDiv.innerHTML = ''; // Clear QR code
 }
 
 
@@ -63,17 +65,18 @@ async function fetchStudentProfile() {
     if (qrCodeDataSpan) qrCodeDataSpan.style.display = 'none'; // Hide raw data span initially
 
 
-    // --- Get Authentication Token (Using hardcoded token for testing) ---
-    const token = TEST_AUTH_TOKEN; // Use the hardcoded test token
+    // --- Get Authentication Token from localStorage ---
+    const token = getAuthToken(); // Call the function to get the token
 
-
-    // Check if a token was found (or if the hardcoded placeholder is still there)
-    if (!token || token === 'YOUR_APPROVED_STUDENT_JWT_HERE') { // Added check for placeholder
-         // If no token is found, display an error and stop
-         displayError("Authentication token is missing or not configured. Please log in first.", 'error-message');
-         console.error("Authentication token not found or is placeholder.");
-         // displayError handles hiding loadingMessage
-         return; // Exit the function
+    // Check if a token was found
+    if (!token) {
+        // If no token is found, the user is not logged in.
+        // Display an error and redirect to the login page.
+        displayError("Authentication token is missing. Please log in first.", 'error-message');
+        console.error("Authentication token not found in localStorage.");
+        // Redirect to the login page
+        window.location.href = 'index.html'; // Assuming index.html is your login page
+        return; // Exit the function
     }
 
     try {
@@ -93,7 +96,10 @@ async function fetchStudentProfile() {
             // Handle HTTP errors (like 401 Unauthorized, 403 Forbidden, 404 Not Found, 500 Internal Server Error)
             let userMessage = `Failed to load profile (${response.status}).`;
             if (response.status === 401 || response.status === 403) {
-                 userMessage = "Access denied. Please log in again or check your permissions.";
+                 userMessage = "Access denied or session expired. Please log in again.";
+                 // If token is invalid/expired, clear it and redirect to login
+                 localStorage.removeItem('authToken');
+                 window.location.href = 'index.html';
             } else if (response.status === 404) {
                  userMessage = "Student profile not found for the authenticated user.";
             } else if (response.status >= 500) {
@@ -130,11 +136,13 @@ async function fetchStudentProfile() {
         if (!qrData) {
             // If QR data is missing, display a message
             console.warn('QR code data is missing from the backend response.');
-             // Optionally display an error message in the profile section if QR is critical
-             // displayError('QR code data not found for this student. Ensure the application was approved.', 'error-message');
+            // Optionally display an error message in the profile section if QR is critical
+            // displayError('QR code data not found for this student. Ensure the application was approved.', 'error-message');
             // Don't necessarily return here if profile data was fetched successfully
         } else {
             // Check if the QR code library is loaded and the container div exists
+            // Make sure you have <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+            // linked in your dashboard.html
             if (typeof QRCode !== 'undefined' && qrcodeDiv) {
                 try {
                     // Clear previous QR code content before generating
@@ -149,33 +157,33 @@ async function fetchStudentProfile() {
                         colorLight : "#ffffff",
                         correctLevel : QRCode.CorrectLevel.H
                     });
-                     // Optionally, hide the raw QR data span if you are displaying the image
-                     if(qrCodeDataSpan) qrCodeDataSpan.style.display = 'none';
+                    // Optionally, hide the raw QR data span if you are displaying the image
+                    if(qrCodeDataSpan) qrCodeDataSpan.style.display = 'none';
 
                 } catch (e) {
-                     console.error('Error generating QR Code:', e);
-                     // Display error message in the profile section if QR generation fails
-                     displayError('Could not generate QR code image.', 'error-message');
-                     // Fallback: display raw QR data if generation fails
-                     if(qrCodeDataSpan) {
-                         qrCodeDataSpan.textContent = `QR Data: ${qrData}`;
-                         qrCodeDataSpan.style.display = 'block';
-                     }
+                    console.error('Error generating QR Code:', e);
+                    // Display error message in the profile section if QR generation fails
+                    displayError('Could not generate QR code image.', 'error-message');
+                    // Fallback: display raw QR data if generation fails
+                    if(qrCodeDataSpan) {
+                        qrCodeDataSpan.textContent = `QR Data: ${qrData}`;
+                        qrCodeDataSpan.style.display = 'block';
+                    }
                 }
             } else {
                 // Handle case where QR library is not loaded or qrcodeDiv is missing
                 let qrErrorMsg = 'QR code generation failed: ';
                 if (typeof QRCode === 'undefined') qrErrorMsg += 'QR code library (qrcode.js) not loaded. ';
-                if (!qrcodeDiv) qrErrorMsg += 'HTML element with ID "qrcode" not found. ';
+                if (!qrcodeDiv) qrErrorMsgMsg += 'HTML element with ID "qrcode" not found. ';
                 console.error(qrErrorMsg);
-                 // Display error message in the profile section
+                // Display error message in the profile section
                 displayError('Could not generate QR code image. Check console for details.', 'error-message');
 
-                 // Fallback: display raw QR data if generation fails
-                 if(qrCodeDataSpan) {
-                     qrCodeDataSpan.textContent = `QR Data: ${qrData}`;
-                     qrCodeDataSpan.style.display = 'block';
-                 }
+                // Fallback: display raw QR data if generation fails
+                if(qrCodeDataSpan) {
+                    qrCodeDataSpan.textContent = `QR Data: ${qrData}`;
+                    qrCodeDataSpan.style.display = 'block';
+                }
             }
         }
 
@@ -186,11 +194,11 @@ async function fetchStudentProfile() {
         displayError('Could not connect to the server or process the profile.', 'error-message');
     } finally {
         // Ensure profile loading message is hidden
-         const loadingMessage = document.getElementById('loading-message');
-         if (loadingMessage && loadingMessage.style.display !== 'none') {
-             loadingMessage.style.display = 'none';
-         }
-         // Note: displayProfileData will handle showing profileDetailsDiv on success
+        const loadingMessage = document.getElementById('loading-message');
+        if (loadingMessage && loadingMessage.style.display !== 'none') {
+            loadingMessage.style.display = 'none';
+        }
+        // Note: displayProfileData will handle showing profileDetailsDiv on success
     }
 }
 
@@ -225,7 +233,7 @@ function displayProfileData(data) {
     if (levelSpan) levelSpan.textContent = data.level || 'N/A';
     // Use the backend data key 'intended_program' for the element with ID 'intended-program'
     if (programSpan) programSpan.textContent = data.intended_program || 'N/A';
-     // Use the backend data key 'department_name' for the element with ID 'department-name'
+    // Use the backend data key 'department_name' for the element with ID 'department-name'
     if (departmentNameSpan) departmentNameSpan.textContent = data.department_name || 'N/A';
     if (emailSpan) emailSpan.textContent = data.email || 'N/A';
     if (contactNumberSpan) contactNumberSpan.textContent = data.contact_number || 'N/A';
@@ -254,17 +262,17 @@ async function fetchStudentNotifications() {
     if (notificationsListElement) notificationsListElement.innerHTML = ''; // Clear previous list content
 
 
-    // --- Get Authentication Token (Using hardcoded token for testing) ---
-    const token = TEST_AUTH_TOKEN; // Use the hardcoded test token
-
+    // --- Get Authentication Token from localStorage ---
+    const token = getAuthToken(); // Call the function to get the token
 
     // Check if a token was found
-    if (!token || token === 'YOUR_APPROVED_STUDENT_JWT_HERE') { // Added check for placeholder
-         // If no token is found, display an error and stop
-         displayError("Authentication token is missing or not configured. Cannot fetch notifications.", 'notifications-error');
-         console.error("Authentication token not found or is placeholder.");
-         // displayError handles hiding loadingElement
-         return; // Exit the function
+    if (!token) {
+        // If no token is found, the user is not logged in.
+        // Display an error and stop. The profile fetch already redirects.
+        displayError("Authentication token is missing. Cannot fetch notifications.", 'notifications-error');
+        console.error("Authentication token not found in localStorage. Notifications fetch stopped.");
+        // displayError handles hiding loadingElement
+        return; // Exit the function
     }
 
     try {
@@ -284,7 +292,11 @@ async function fetchStudentNotifications() {
             // Handle HTTP errors (like 401 Unauthorized, 403 Forbidden, 404 Not Found, 500 Internal Server Error)
             let userMessage = `Failed to load notifications (${response.status}).`;
             if (response.status === 401 || response.status === 403) {
-                 userMessage = "Access denied. Please log in again or check your permissions.";
+                 userMessage = "Access denied or session expired. Please log in again.";
+                 // If token is invalid/expired, clear it and redirect to login
+                 // The profile fetch already handles this, but good to have here too
+                 localStorage.removeItem('authToken');
+                 window.location.href = 'index.html';
             } else if (response.status === 404) {
                  userMessage = "Notifications endpoint not found or no notifications available.";
             } else if (response.status >= 500) {
@@ -321,11 +333,11 @@ async function fetchStudentNotifications() {
         displayError('Could not connect to the server or process notifications.', 'notifications-error');
     } finally {
         // Ensure loading message is hidden regardless of outcome
-         const loadingElement = document.getElementById('notifications-loading');
-         if (loadingElement && loadingElement.style.display !== 'none') {
-             loadingElement.style.display = 'none';
-         }
-         // Note: displayNotifications will handle showing/hiding the list based on data
+        const loadingElement = document.getElementById('notifications-loading');
+        if (loadingElement && loadingElement.style.display !== 'none') {
+            loadingElement.style.display = 'none';
+        }
+        // Note: displayNotifications will handle showing/hiding the list based on data
     }
 }
 
@@ -348,8 +360,9 @@ function displayNotifications(notifications) {
     notificationsListElement.innerHTML = '';
 
     // Check if there are any notifications
-    if (!notifications || notifications.length === 0) {
-        // Display a message if no notifications are found
+    // Assuming the backend returns an array of notifications
+    if (!Array.isArray(notifications) || notifications.length === 0) {
+        // Display a message if no notifications are found or if the response isn't an array
         const noNotificationsItem = document.createElement('li');
         noNotificationsItem.textContent = 'No notifications found.';
         noNotificationsItem.style.textAlign = 'center';
@@ -365,7 +378,7 @@ function displayNotifications(notifications) {
         listItem.classList.add('notification-item'); // Use a class for styling
 
         // Create the inner structure based on your desired layout
-        // Use the keys from your backend response
+        // Use the keys from your backend response (e.g., title, message, created_at, etc.)
         listItem.innerHTML = `
             <div class="notification-details">
                 <p class="notification-title">${notification.title || 'No Title'}</p>
@@ -393,49 +406,98 @@ function displayNotifications(notifications) {
 // --- Event Listener ---
 // Call both fetch functions when the entire HTML document has been loaded and parsed
 document.addEventListener('DOMContentLoaded', () => {
-    fetchStudentProfile(); // Call the profile and QR fetch function
-    fetchStudentNotifications(); // Call the notifications fetch function
+    // Add a check for the token *before* attempting to fetch data
+    const token = getAuthToken();
+    if (!token) {
+         // If token is missing, the redirect to login happens inside getAuthToken or fetch functions
+         console.warn("Token is missing on dashboard load. Redirection should occur.");
+         // No need to call fetch functions if token is missing, redirection handles it.
+         // However, the fetch functions themselves also check and redirect, which is good.
+    } else {
+        // If token exists, proceed to fetch data
+        fetchStudentProfile(); // Call the profile and QR fetch function
+        fetchStudentNotifications(); // Call the notifications fetch function
+    }
+
+    // --- Notification Box Toggle Logic ---
+    // Get the button and the notification box elements
+    const toggleNotificationBtn = document.getElementById('toggleNotificationBtn');
+    const notificationBox = document.getElementById('myNotification');
+
+    // Add event listener to the button to toggle the notification
+    if (toggleNotificationBtn && notificationBox) {
+        toggleNotificationBtn.addEventListener('click', () => {
+            // Check if the box currently has the 'show' class
+            const isShowing = notificationBox.classList.contains('show');
+
+            if (isShowing) {
+                // If it's showing, start the hiding animation
+                notificationBox.classList.remove('show');
+                // Wait for the transition to finish before setting display to none
+                notificationBox.addEventListener('transitionend', function handler() {
+                    notificationBox.style.display = 'none';
+                    notificationBox.removeEventListener('transitionend', handler); // Remove listener after it runs
+                });
+            } else {
+                // If it's hidden, set display to block immediately and then add 'show' class
+                notificationBox.style.display = 'block';
+                // Use a small timeout to allow display:block to take effect before starting transition
+                setTimeout(() => {
+                    notificationBox.classList.add('show');
+                }, 10); // A small delay, like 10ms, is often sufficient
+            }
+        });
+
+        // Add event listener to the notification box to hide it when clicked
+        notificationBox.addEventListener('click', () => {
+             // Check if the box currently has the 'show' class
+            const isShowing = notificationBox.classList.contains('show');
+            if (isShowing) {
+                 // If it's showing, start the hiding animation
+                notificationBox.classList.remove('show');
+                // Wait for the transition to finish before setting display to none
+                notificationBox.addEventListener('transitionend', function handler() {
+                    notificationBox.style.display = 'none';
+                    notificationBox.removeEventListener('transitionend', handler); // Remove listener after it runs
+                });
+            }
+        });
+    } else {
+        console.warn("Notification toggle button or box not found in the HTML.");
+    }
+
+    // --- Logout Button Logic ---
+    // You would need a logout button in your dashboard HTML: <button id="logout-button">Logout</button>
+    const logoutButton = document.getElementById('logout-button');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+            // Clear the token from localStorage
+            localStorage.removeItem('authToken');
+            console.log("Auth token removed from localStorage.");
+
+            // Optional: If your backend has a logout endpoint to invalidate the token/session server-side, call it here.
+            // You might still need the token for this request before clearing it.
+            // const tokenToLogout = getAuthToken(); // Get token before clearing
+            // if (tokenToLogout) {
+            //     fetch('YOUR_RENDER_BACKEND_URL/logout', {
+            //         method: 'POST', // Or GET, depending on your backend
+            //         headers: { 'Authorization': `Bearer ${tokenToLogout}` }
+            //     }).then(response => {
+            //         console.log('Backend logout response:', response.status);
+            //         // Regardless of backend logout success/failure, redirect the user
+            //         window.location.href = 'index.html';
+            //     }).catch(error => {
+            //         console.error('Error calling backend logout:', error);
+            //         // Redirect even if backend logout fails
+            //         window.location.href = 'index.html';
+            //     });
+            // } else {
+                 // If no token was found anyway, just redirect
+                 window.location.href = 'dashboard.html';
+            // }
+        });
+    } else {
+        console.warn("Logout button with ID 'logout-button' not found in the HTML.");
+    }
+
 });
-
- // Get the button and the notification box elements
- const toggleNotificationBtn = document.getElementById('toggleNotificationBtn');
- const notificationBox = document.getElementById('myNotification');
-
- // Add event listener to the button to toggle the notification
- toggleNotificationBtn.addEventListener('click', () => {
-     // Check if the box currently has the 'show' class
-     const isShowing = notificationBox.classList.contains('show');
-
-     if (isShowing) {
-         // If it's showing, start the hiding animation
-         notificationBox.classList.remove('show');
-         // Wait for the transition to finish before setting display to none
-         notificationBox.addEventListener('transitionend', function handler() {
-             notificationBox.style.display = 'none';
-             notificationBox.removeEventListener('transitionend', handler); // Remove listener after it runs
-         });
-     } else {
-         // If it's hidden, set display to block immediately and then add 'show' class
-         notificationBox.style.display = 'block';
-         // Use a small timeout to allow display:block to take effect before starting transition
-         setTimeout(() => {
-              notificationBox.classList.add('show');
-         }, 10); // A small delay, like 10ms, is often sufficient
-     }
- });
-
- // Add event listener to the notification box to hide it when clicked
- // This listener remains the same as before
- notificationBox.addEventListener('click', () => {
-      // Check if the box currently has the 'show' class
-     const isShowing = notificationBox.classList.contains('show');
-     if (isShowing) {
-          // If it's showing, start the hiding animation
-         notificationBox.classList.remove('show');
-         // Wait for the transition to finish before setting display to none
-         notificationBox.addEventListener('transitionend', function handler() {
-             notificationBox.style.display = 'none';
-             notificationBox.removeEventListener('transitionend', handler); // Remove listener after it runs
-         });
-     }
- });

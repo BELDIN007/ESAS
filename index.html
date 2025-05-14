@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="container">
+        <h1>Welcome</h1>
+
+        <div id="form-switcher">
+
+<form class="form" id="login-form">
+    <input type="text" name="username" placeholder="Username" required> <input type="password" name="password" placeholder="Password" required> <button type="submit">Login</button>
+</form>
+
+            <p class="switch-link" id="show-register">Register</p>
+
+            <div id="register-options" class="hidden form-section">
+                <h2>Register As:</h2>
+                <button class="register-type-button" data-type="lecturer">Lecturer</button>
+                <button class="register-type-button" data-type="student">Student</button>
+                <p class="switch-link" id="back-to-login">Back to Login</p>
+            </div>
+
+            <form class="form hidden form-section" id="lecturer-register-form">
+                <h2>Lecturer Registration</h2>
+                <input type="text" name="first_name" placeholder="First Name" required>
+                <input type="text" name="last_name" placeholder="Last Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="tel" name="contact_number" placeholder="Contact Number" required> <input type="date" name="date_of_birth" placeholder="Date of Birth"> 
+                <select name="gender"> 
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+
+                <input type="text" name="intended_department_name" placeholder="Intended Department Name" required>
+                <input type="text" name="intended_program" placeholder="Area of Specialization / Courses" required>
+                <input type="text" name="proposed_username" placeholder="Proposed Username" required>
+                <input type="password" name="proposed_password" placeholder="Proposed Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required> <button type="submit">Submit Lecturer Application</button>
+                <p class="switch-link" id="back-to-options-lecturer">Back to Options</p>
+            </form>
+
+            <form class="form hidden form-section" id="student-register-form">
+                <h2>Student Registration</h2>
+                <input type="text" name="first_name" placeholder="First Name" required>
+                <input type="text" name="last_name" placeholder="Last Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="tel" name="contact_number" placeholder="Contact Number" required> <input type="date" name="date_of_birth" placeholder="Date of Birth" required> 
+                <select name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                </select> <br>
+
+                <select name="level" required>
+                <option value="">Select Level Applying For</option>
+                <option value="Undergraduate">Undergraduate</option>
+                <option value="Postgraduate">Postgraduate</option>
+                </select>
+
+            <input type="text" name="intended_department_name" placeholder="Intended Department Name" required>
+            <input type="text" name="intended_program" placeholder="Intended Program (e.g., B.Sc. Computer Science)" required>
+            <input type="text" name="proposed_username" placeholder="Proposed Username" required>
+            <input type="password" name="proposed_password" placeholder="Proposed Password" required>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required> <button type="submit">Submit Student Application</button>
+            <p class="switch-link" id="back-to-options-student">Back to Options</p>
+        </form>
+
+        </div> </div>
+
+    <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+
+<script src="login.js"></script>
+<script src="registration.js"></script>
+
+</body>
+</html>
